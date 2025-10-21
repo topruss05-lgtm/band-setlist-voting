@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { supabase } from "../lib/supabase";
+
+const accessToken = Astro.cookies.get("sb-access-token");
+const refreshToken = Astro.cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return Astro.redirect("/signin");
+}
+
+let session;
+try {
+  session = await supabase.auth.setSession({
+    refresh_token: refreshToken.value,
+    access_token: accessToken.value,
+  });
+  if (session.error) {
+    Astro.cookies.delete("sb-access-token", { path: "/" });
+    Astro.cookies.delete("sb-refresh-token", { path: "/" });
+    return Astro.redirect("/signin");
+  }
+} catch (error) {
+  Astro.cookies.delete("sb-access-token", { path: "/" });
+  Astro.cookies.delete("sb-refresh-token", { path: "/" });
+  return Astro.redirect("/signin");
+}
+
+const email = session.data.user?.email;
+---
+
+<Layout title="Dashboard - Band Setlist">
+  <nav>
+    <div class="nav-content">
+      <h1>Band Setlist Voting</h1>
+      <div>
+        <a href="/suggest">Song vorschlagen</a>
+        <a href="/vote">Abstimmen</a>
+        <a href="/setlist">Setliste</a>
+        <a href="/api/auth/signout">Abmelden</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>Willkommen, {email}!</h2>
+    <div class="card">
+      <h3 style="margin-bottom: 1rem;">Was möchtest du tun?</h3>
+      <p style="margin-bottom: 0.5rem;"><a href="/suggest" class="link">Song vorschlagen</a> - Schlage einen neuen Song mit YouTube-Link vor</p>
+      <p style="margin-bottom: 0.5rem;"><a href="/vote" class="link">Abstimmen</a> - Bewerte vorgeschlagene Songs mit 1-5 Sternen</p>
+      <p><a href="/setlist" class="link">Setliste ansehen</a> - Sieh die Top 20 Songs basierend auf den Bewertungen</p>
+    </div>
+  </div>
+</Layout>

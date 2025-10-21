@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Registrieren - Band Setlist">
+  <nav>
+    <div class="nav-content">
+      <h1>Band Setlist Voting</h1>
+      <div>
+        <a href="/signin">Anmelden</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>Registrieren</h2>
+    <p style="margin-bottom: 1rem;">Bereits Mitglied? <a href="/signin" class="link">Jetzt anmelden</a></p>
+    <form action="/api/auth/register" method="post">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required />
+      <label for="password">Passwort</label>
+      <input type="password" name="password" id="password" required minlength="6" />
+      <button type="submit">Registrieren</button>
+    </form>
+  </div>
+</Layout>

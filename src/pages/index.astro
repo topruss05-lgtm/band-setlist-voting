@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const accessToken = Astro.cookies.get("sb-access-token");
+const refreshToken = Astro.cookies.get("sb-refresh-token");
+
+// Redirect to dashboard if already logged in
+if (accessToken && refreshToken) {
+  return Astro.redirect("/dashboard");
+}
+---
+
+<Layout title="Band Setlist Voting">
+  <nav>
+    <div class="nav-content">
+      <h1>Band Setlist Voting</h1>
+      <div>
+        <a href="/signin">Anmelden</a>
+        <a href="/register">Registrieren</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="hero">
+      <h2>Willkommen beim Band Setlist Voting!</h2>
+      <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+        Stimme gemeinsam mit deinen Bandmitgliedern über die Songs ab, die in eure Setliste aufgenommen werden sollen.
+      </p>
+
+      <div class="features">
+        <div class="card feature">
+          <h3>Songs vorschlagen</h3>
+          <p>Schlage neue Songs vor und teile YouTube-Links mit der Band</p>
+        </div>
+
+        <div class="card feature">
+          <h3>Abstimmen</h3>
+          <p>Bewerte Songs mit 1-5 Sternen und schaue dir die Videos direkt an</p>
+        </div>
+
+        <div class="card feature">
+          <h3>Setliste</h3>
+          <p>Die Top 20 Songs mit den besten Bewertungen landen in der Setliste</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: center;">
+        <a href="/register">
+          <button style="font-size: 1.1rem; padding: 1rem 2rem;">
+            Jetzt starten
+          </button>
+        </a>
+        <p style="margin-top: 1rem;">
+          Bereits Mitglied? <a href="/signin" class="link">Hier anmelden</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .hero {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .feature h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</Layout>
