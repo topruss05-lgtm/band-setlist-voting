@@ -22,13 +22,10 @@ try {
   return Astro.redirect("/signin");
 }
 
-// Fetch all songs with user's votes
+// Fetch all songs
 const { data: songs, error } = await supabase
   .from("songs")
-  .select(`
-    *,
-    votes!inner(rating, user_id)
-  `)
+  .select("*")
   .order("created_at", { ascending: false });
 
 // Get user's votes
@@ -82,7 +79,19 @@ function getYouTubeVideoId(url: string): string | null {
 
           return (
             <div class="card song-card" data-song-id={song.id}>
-              <h3>{song.title}</h3>
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">{song.title}</h3>
+                {song.suggested_by === session.data.user.id && (
+                  <button
+                    class="delete-btn"
+                    data-song-id={song.id}
+                    title="Song löschen"
+                    style="background: #ef4444; padding: 0.5rem 1rem; font-size: 0.9rem;"
+                  >
+                    Löschen
+                  </button>
+                )}
+              </div>
 
               {videoId && (
                 <div class="video-container" style="margin: 1rem 0;">
@@ -235,6 +244,48 @@ function getYouTubeVideoId(url: string): string | null {
       // Remove hover effect when leaving stars container
       starsContainer.addEventListener('mouseleave', () => {
         stars.forEach((s) => s.classList.remove('hover'));
+      });
+    });
+
+    // Handle delete button clicks
+    document.querySelectorAll('.delete-btn').forEach((button) => {
+      button.addEventListener('click', async (e) => {
+        const songId = button.getAttribute('data-song-id');
+
+        if (!confirm('Möchtest du diesen Song wirklich löschen?')) {
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/songs/delete', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              song_id: songId,
+            }),
+          });
+
+          if (response.ok) {
+            // Remove song card from DOM
+            const songCard = document.querySelector(`.song-card[data-song-id="${songId}"]`);
+            if (songCard) {
+              songCard.remove();
+            }
+
+            // Check if there are no more songs
+            const songsContainer = document.getElementById('songs-container');
+            if (songsContainer && songsContainer.children.length === 0) {
+              location.reload();
+            }
+          } else {
+            alert('Fehler beim Löschen des Songs');
+          }
+        } catch (error) {
+          console.error('Error deleting song:', error);
+          alert('Fehler beim Löschen des Songs');
+        }
       });
     });
   </script>
