@@ -10,72 +10,89 @@ if (accessToken && refreshToken) {
 }
 ---
 
-<Layout title="Band Setlist Voting">
-  <nav>
-    <div class="nav-content">
-      <h1>Band Setlist Voting</h1>
-      <div>
-        <a href="/signin">Anmelden</a>
-        <a href="/register">Registrieren</a>
-      </div>
-    </div>
-  </nav>
-  <div class="container">
-    <div class="hero">
-      <h2>Willkommen beim Band Setlist Voting!</h2>
-      <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-        Stimme gemeinsam mit deinen Bandmitgliedern über die Songs ab, die in eure Setliste aufgenommen werden sollen.
-      </p>
-
-      <div class="features">
-        <div class="card feature">
-          <h3>Songs vorschlagen</h3>
-          <p>Schlage neue Songs vor und teile YouTube-Links mit der Band</p>
-        </div>
-
-        <div class="card feature">
-          <h3>Abstimmen</h3>
-          <p>Bewerte Songs mit 1-5 Sternen und schaue dir die Videos direkt an</p>
-        </div>
-
-        <div class="card feature">
-          <h3>Setliste</h3>
-          <p>Die Top 20 Songs mit den besten Bewertungen landen in der Setliste</p>
+<Layout title="Blakerunners Setlist">
+  <!-- Hero Section -->
+  <div class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="border-b border-white/10 backdrop-blur-sm bg-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-3">
+            <svg class="w-8 h-8 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+            <span class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+              Blakerunners
+            </span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/signin" class="text-gray-300 hover:text-white transition-colors font-medium">
+              Anmelden
+            </a>
+            <a href="/register" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-lg font-medium transition-all transform hover:scale-105">
+              Registrieren
+            </a>
+          </div>
         </div>
       </div>
+    </nav>
 
-      <div style="margin-top: 2rem; text-align: center;">
-        <a href="/register">
-          <button style="font-size: 1.1rem; padding: 1rem 2rem;">
-            Jetzt starten
-          </button>
-        </a>
-        <p style="margin-top: 1rem;">
-          Bereits Mitglied? <a href="/signin" class="link">Hier anmelden</a>
-        </p>
+    <!-- Hero Content -->
+    <div class="flex-1 flex items-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+        <div class="text-center mb-16">
+          <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary-300 to-purple-400 bg-clip-text text-transparent">
+            Setlist Voting
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            Stimme gemeinsam mit deinen Bandmitgliedern über die Songs ab, die in eure Setliste aufgenommen werden sollen
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/register" class="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 px-8 py-4 rounded-xl font-semibold text-lg transition-all transform hover:scale-105 shadow-lg shadow-primary-500/50">
+              Jetzt starten
+            </a>
+            <a href="/signin" class="bg-white/10 hover:bg-white/20 backdrop-blur-sm px-8 py-4 rounded-xl font-semibold text-lg transition-all border border-white/20">
+              Anmelden
+            </a>
+          </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid md:grid-cols-3 gap-8 mt-20">
+          <!-- Feature 1 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-primary-500/50 transition-all hover:transform hover:scale-105">
+            <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-purple-500 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-white">Songs vorschlagen</h3>
+            <p class="text-gray-400">Schlage neue Songs vor und teile YouTube-Links mit der Band</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-primary-500/50 transition-all hover:transform hover:scale-105">
+            <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-purple-500 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-white">Abstimmen</h3>
+            <p class="text-gray-400">Bewerte Songs mit 1-5 Sternen und schaue dir die Videos direkt an</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-primary-500/50 transition-all hover:transform hover:scale-105">
+            <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-purple-500 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-white">Setliste</h3>
+            <p class="text-gray-400">Die Top 20 Songs mit den besten Bewertungen landen in der Setliste</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <style>
-    .hero {
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 0;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-      text-align: left;
-    }
-
-    .feature h3 {
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-  </style>
 </Layout>
