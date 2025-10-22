@@ -34,7 +34,9 @@ try {
               Blakerunners
             </span>
           </a>
-          <div class="flex items-center space-x-4">
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-4">
             <a href="/dashboard" class="text-gray-300 hover:text-white transition-colors font-medium">
               Dashboard
             </a>
@@ -48,21 +50,46 @@ try {
               Abmelden
             </a>
           </div>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none" aria-label="Menu öffnen">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+          <div class="flex flex-col space-y-2">
+            <a href="/dashboard" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Dashboard
+            </a>
+            <a href="/vote" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Abstimmen
+            </a>
+            <a href="/setlist" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Setliste
+            </a>
+            <a href="/api/auth/signout" class="text-gray-400 hover:text-gray-300 transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Abmelden
+            </a>
+          </div>
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="flex-1 px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
       <div class="max-w-2xl mx-auto">
-        <div class="mb-8">
-          <h2 class="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">
+        <div class="mb-6 sm:mb-8">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">
             Song vorschlagen
           </h2>
-          <p class="text-gray-400">Schlage einen neuen Song mit YouTube-Link vor</p>
+          <p class="text-gray-400 text-sm sm:text-base">Schlage einen neuen Song mit YouTube-Link vor</p>
         </div>
 
-        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/10">
           <form action="/api/songs/suggest" method="post" class="space-y-6">
             <div>
               <label for="title" class="block text-sm font-medium text-gray-300 mb-2">
@@ -97,7 +124,7 @@ try {
               </p>
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex flex-col sm:flex-row gap-4">
               <button
                 type="submit"
                 class="flex-1 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 px-6 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg shadow-primary-500/50"
@@ -115,11 +142,23 @@ try {
         </div>
 
         <div class="mt-6 text-center">
-          <a href="/vote" class="text-primary-400 hover:text-primary-300 font-medium transition-colors">
+          <a href="/vote" class="text-primary-400 hover:text-primary-300 font-medium transition-colors text-sm sm:text-base">
             Zurück zur Abstimmung
           </a>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
 </Layout>

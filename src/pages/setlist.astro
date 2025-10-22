@@ -54,7 +54,9 @@ function getYouTubeVideoId(url: string): string | null {
               Blakerunners
             </span>
           </a>
-          <div class="flex items-center space-x-4">
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-4">
             <a href="/dashboard" class="text-gray-300 hover:text-white transition-colors font-medium">
               Dashboard
             </a>
@@ -68,70 +70,97 @@ function getYouTubeVideoId(url: string): string | null {
               Abmelden
             </a>
           </div>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none" aria-label="Menu öffnen">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+          <div class="flex flex-col space-y-2">
+            <a href="/dashboard" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Dashboard
+            </a>
+            <a href="/suggest" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Vorschlagen
+            </a>
+            <a href="/vote" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Abstimmen
+            </a>
+            <a href="/api/auth/signout" class="text-gray-400 hover:text-gray-300 transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Abmelden
+            </a>
+          </div>
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="flex-1 px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
       <div class="max-w-5xl mx-auto">
-        <div class="mb-8">
-          <h2 class="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">
+        <div class="mb-6 sm:mb-8">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">
             Top 20 Setliste
           </h2>
-          <p class="text-gray-400">Die besten Songs basierend auf euren Bewertungen</p>
+          <p class="text-gray-400 text-sm sm:text-base">Die besten Songs basierend auf euren Bewertungen</p>
         </div>
 
         {topSongs && topSongs.length > 0 ? (
-          <div class="space-y-4">
+          <div class="space-y-3 sm:space-y-4">
             {topSongs.map((song: any, index: number) => {
               const videoId = getYouTubeVideoId(song.youtube_url);
               const avgRating = parseFloat(song.avg_rating).toFixed(1);
               const voteCount = song.vote_count;
 
               return (
-                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-primary-500/50 transition-all">
-                  <div class="flex gap-6 items-start">
-                    <div class={`rank-badge flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center font-bold ${
-                      index === 0 ? 'bg-gradient-to-br from-yellow-500 to-yellow-600 text-3xl' :
-                      index === 1 ? 'bg-gradient-to-br from-gray-400 to-gray-500 text-2xl' :
-                      index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700 text-2xl' :
-                      'bg-gradient-to-br from-primary-500 to-blue-500 text-xl'
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-primary-500/50 transition-all">
+                  <div class="flex gap-3 sm:gap-6 items-start">
+                    <div class={`rank-badge flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center font-bold ${
+                      index === 0 ? 'bg-gradient-to-br from-yellow-500 to-yellow-600 text-2xl sm:text-3xl' :
+                      index === 1 ? 'bg-gradient-to-br from-gray-400 to-gray-500 text-xl sm:text-2xl' :
+                      index === 2 ? 'bg-gradient-to-br from-amber-600 to-amber-700 text-xl sm:text-2xl' :
+                      'bg-gradient-to-br from-primary-500 to-blue-500 text-lg sm:text-xl'
                     }`}>
                       #{index + 1}
                     </div>
 
                     <div class="flex-1 min-w-0">
-                      <h3 class="text-2xl font-bold text-white mb-3">{song.title}</h3>
+                      <h3 class="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-3 break-words">{song.title}</h3>
 
-                      <div class="flex items-center gap-4 mb-4">
+                      <div class="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                         <div class="flex items-center gap-1.5">
-                          <span class="text-amber-500 text-xl">★</span>
-                          <span class="text-white font-semibold">{avgRating}</span>
+                          <span class="text-amber-500 text-lg sm:text-xl">★</span>
+                          <span class="text-white font-semibold text-sm sm:text-base">{avgRating}</span>
                         </div>
-                        <span class="text-gray-400 text-sm">
+                        <span class="text-gray-400 text-xs sm:text-sm">
                           {voteCount} {voteCount === 1 ? 'Bewertung' : 'Bewertungen'}
                         </span>
                       </div>
 
                       {videoId && (
                         <details class="group">
-                          <summary class="cursor-pointer text-primary-400 hover:text-primary-300 font-medium transition-colors select-none list-none flex items-center gap-2">
-                            <svg class="w-5 h-5 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <summary class="cursor-pointer text-primary-400 hover:text-primary-300 font-medium transition-colors select-none list-none flex items-center gap-2 text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                             Video ansehen
                           </summary>
-                          <div class="video-container mt-4 rounded-xl overflow-hidden">
+                          <div class="video-container mt-3 sm:mt-4 rounded-xl overflow-hidden bg-black">
                             <iframe
                               width="100%"
                               height="315"
-                              src={`https://www.youtube.com/embed/${videoId}`}
+                              src={`https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0`}
                               title={song.title}
                               frameborder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                               allowfullscreen
+                              loading="lazy"
                               class="rounded-xl"
+                              style="border: 0;"
                             ></iframe>
                           </div>
                         </details>
@@ -143,8 +172,8 @@ function getYouTubeVideoId(url: string): string | null {
             })}
           </div>
         ) : (
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 text-center">
-            <p class="text-gray-400">
+          <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/10 text-center">
+            <p class="text-gray-400 text-sm sm:text-base">
               Noch keine Songs in der Setliste. <a href="/suggest" class="text-primary-400 hover:text-primary-300 font-medium transition-colors">Schlage einen Song vor</a> und <a href="/vote" class="text-primary-400 hover:text-primary-300 font-medium transition-colors">stimme ab</a>!
             </p>
           </div>
@@ -173,4 +202,16 @@ function getYouTubeVideoId(url: string): string | null {
       display: none;
     }
   </style>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
 </Layout>

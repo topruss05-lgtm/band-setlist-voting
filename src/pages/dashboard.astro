@@ -38,7 +38,9 @@ const email = session.data.user?.email;
           <span class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-blue-400 bg-clip-text text-transparent">
             Blakerunners
           </span>
-          <div class="flex items-center space-x-4">
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-4">
             <a href="/suggest" class="text-gray-300 hover:text-white transition-colors font-medium">
               Vorschlagen
             </a>
@@ -52,22 +54,47 @@ const email = session.data.user?.email;
               Abmelden
             </a>
           </div>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none" aria-label="Menu öffnen">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+          <div class="flex flex-col space-y-2">
+            <a href="/suggest" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Vorschlagen
+            </a>
+            <a href="/vote" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Abstimmen
+            </a>
+            <a href="/setlist" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Setliste
+            </a>
+            <a href="/api/auth/signout" class="text-gray-400 hover:text-gray-300 transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Abmelden
+            </a>
+          </div>
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="flex-1 px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
       <div class="max-w-5xl mx-auto">
-        <div class="mb-12">
-          <h2 class="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">
+        <div class="mb-8 sm:mb-12">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-white to-primary-300 bg-clip-text text-transparent">
             Willkommen zurück!
           </h2>
-          <p class="text-gray-400 text-lg">{email}</p>
+          <p class="text-gray-400 text-base sm:text-lg break-all">{email}</p>
         </div>
 
         <!-- Feature Cards Grid -->
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           <!-- Song vorschlagen Card -->
           <a href="/suggest" class="group">
             <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-primary-500/50 transition-all hover:transform hover:scale-105 h-full">
@@ -122,4 +149,16 @@ const email = session.data.user?.email;
       </div>
     </div>
   </div>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
 </Layout>
