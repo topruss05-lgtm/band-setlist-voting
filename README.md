@@ -14,8 +14,8 @@ Eine Web-Anwendung für Bands, um gemeinsam über Songs abzustimmen, die in die 
 
 - **Frontend**: Astro (Server-Side Rendering)
 - **Backend**: Supabase (Postgres Database + Auth)
-- **Styling**: Vanilla CSS
-- **Deployment**: IONOS Deploy Now
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
 
 ## Setup
 
@@ -48,20 +48,22 @@ npm run dev
 
 Die App läuft dann auf `http://localhost:4321`
 
-## Deployment auf IONOS Deploy Now
+## Deployment auf Vercel
 
 ### Automatisches Deployment
 
 1. Repository auf GitHub pushen
-2. Bei IONOS Deploy Now anmelden
+2. Bei [Vercel](https://vercel.com) anmelden
 3. Projekt mit deinem GitHub-Repository verbinden
-4. Environment-Variablen in den IONOS-Einstellungen hinzufügen:
+4. Environment-Variablen in den Vercel-Projekteinstellungen hinzufügen:
    - `SUPABASE_URL`
    - `SUPABASE_ANON_KEY`
-5. Deploy-Prozess startet automatisch
+5. Deploy-Prozess startet automatisch bei jedem Push
 
 ### Build-Konfiguration
 
+Vercel erkennt Astro automatisch. Falls manuelle Konfiguration nötig:
+- **Framework Preset**: Astro
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist/`
 - **Node Version**: 18+
@@ -71,6 +73,8 @@ Die App läuft dann auf `http://localhost:4321`
 ```
 band-setlist-voting/
 ├── src/
+│   ├── components/
+│   │   └── Navigation.astro      # Wiederverwendbare Navigation
 │   ├── layouts/
 │   │   └── Layout.astro          # Haupt-Layout mit Styling
 │   ├── lib/
@@ -86,6 +90,9 @@ band-setlist-voting/
 │   │   ├── suggest.astro         # Song vorschlagen
 │   │   ├── vote.astro            # Abstimmen
 │   │   └── setlist.astro         # Top 20 Setliste
+│   ├── types/
+│   │   └── index.ts              # TypeScript-Interfaces
+│   ├── middleware.ts             # Auth-Middleware
 │   └── env.d.ts                  # TypeScript-Typen
 ├── .env                          # Environment-Variablen (nicht in Git)
 ├── .env.example                  # Environment-Variablen Template
@@ -123,11 +130,26 @@ band-setlist-voting/
 3. **Abstimmen**: Bewerte Songs mit 1-5 Sternen während du das Video anschaust
 4. **Setliste ansehen**: Die Top 20 Songs basierend auf den Bewertungen
 
+## Architektur & Best Practices
+
+### Authentifizierung
+- **Zentrale Middleware**: Auth-Logik in `src/middleware.ts` für alle geschützten Routen
+- **Session Management**: User-Daten über `Astro.locals` verfügbar
+- **Cookie Security**: HttpOnly, Secure (Production), SameSite-Flags
+
+### Code-Organisation
+- **Wiederverwendbare Komponenten**: Navigation als separate Komponente
+- **TypeScript**: Strikte Typisierung mit Interfaces für Song, Vote, User
+- **DRY-Prinzip**: Keine Code-Duplikation durch zentralisierte Logik
+
 ## Sicherheit
 
 - Row Level Security (RLS) ist auf allen Tabellen aktiviert
 - Benutzer können nur ihre eigenen Votes bearbeiten
 - Authentifizierung erforderlich für alle geschützten Routen
+- Auth-Cookies mit HttpOnly-Flag gegen XSS geschützt
+- Secure-Flag in Production für HTTPS-only
+- SameSite-Protection gegen CSRF-Angriffe
 
 ## Commands
 
