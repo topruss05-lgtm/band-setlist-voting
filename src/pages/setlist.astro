@@ -1,24 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
 import { supabase } from "../lib/supabase";
+import type { SongRanking } from "../types";
 
-const accessToken = Astro.cookies.get("sb-access-token");
-const refreshToken = Astro.cookies.get("sb-refresh-token");
-
-if (!accessToken || !refreshToken) {
-  return Astro.redirect("/signin");
-}
-
-let session;
-try {
-  session = await supabase.auth.setSession({
-    refresh_token: refreshToken.value,
-    access_token: accessToken.value,
-  });
-  if (session.error) {
-    return Astro.redirect("/signin");
-  }
-} catch (error) {
+// User is available from middleware via Astro.locals
+const user = Astro.locals.user;
+if (!user) {
   return Astro.redirect("/signin");
 }
 
@@ -45,59 +33,7 @@ function getYouTubeVideoId(url: string): string | null {
 
 <Layout title="Setliste - Blakerunners">
   <div class="min-h-screen flex flex-col">
-    <!-- Navigation -->
-    <nav class="border-b border-white/10 backdrop-blur-sm bg-white/5">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <a href="/dashboard">
-            <span class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-blue-400 bg-clip-text text-transparent">
-              Blakerunners
-            </span>
-          </a>
-
-          <!-- Desktop Navigation -->
-          <div class="hidden md:flex items-center space-x-4">
-            <a href="/dashboard" class="text-gray-300 hover:text-white transition-colors font-medium">
-              Dashboard
-            </a>
-            <a href="/suggest" class="text-gray-300 hover:text-white transition-colors font-medium">
-              Vorschlagen
-            </a>
-            <a href="/vote" class="text-gray-300 hover:text-white transition-colors font-medium">
-              Abstimmen
-            </a>
-            <a href="/api/auth/signout" class="text-gray-400 hover:text-gray-300 transition-colors font-medium">
-              Abmelden
-            </a>
-          </div>
-
-          <!-- Mobile Menu Button -->
-          <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none" aria-label="Menu öffnen">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="hidden md:hidden pb-4">
-          <div class="flex flex-col space-y-2">
-            <a href="/dashboard" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
-              Dashboard
-            </a>
-            <a href="/suggest" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
-              Vorschlagen
-            </a>
-            <a href="/vote" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
-              Abstimmen
-            </a>
-            <a href="/api/auth/signout" class="text-gray-400 hover:text-gray-300 transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
-              Abmelden
-            </a>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navigation currentPage="setlist" />
 
     <!-- Main Content -->
     <div class="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
@@ -111,7 +47,7 @@ function getYouTubeVideoId(url: string): string | null {
 
         {topSongs && topSongs.length > 0 ? (
           <div class="space-y-3 sm:space-y-4">
-            {topSongs.map((song: any, index: number) => {
+            {topSongs.map((song: SongRanking, index: number) => {
               const videoId = getYouTubeVideoId(song.youtube_url);
               const avgRating = parseFloat(song.avg_rating).toFixed(1);
               const voteCount = song.vote_count;
@@ -202,16 +138,4 @@ function getYouTubeVideoId(url: string): string | null {
       display: none;
     }
   </style>
-
-  <script>
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
-  </script>
 </Layout>
