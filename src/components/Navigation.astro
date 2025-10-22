@@ -1,0 +1,112 @@
+---
+interface Props {
+  currentPage?: string;
+}
+
+const { currentPage } = Astro.props;
+---
+
+<nav class="border-b border-white/10 backdrop-blur-sm bg-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href="/dashboard">
+        <span class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-blue-400 bg-clip-text text-transparent">
+          Blakerunners
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a
+          href="/dashboard"
+          class={`text-gray-300 hover:text-white transition-colors font-medium ${currentPage === 'dashboard' ? 'text-white' : ''}`}
+        >
+          Dashboard
+        </a>
+        <a
+          href="/suggest"
+          class={`text-gray-300 hover:text-white transition-colors font-medium ${currentPage === 'suggest' ? 'text-white' : ''}`}
+        >
+          Vorschlagen
+        </a>
+        <a
+          href="/vote"
+          class={`text-gray-300 hover:text-white transition-colors font-medium ${currentPage === 'vote' ? 'text-white' : ''}`}
+        >
+          Abstimmen
+        </a>
+        <a
+          href="/setlist"
+          class={`text-gray-300 hover:text-white transition-colors font-medium ${currentPage === 'setlist' ? 'text-white' : ''}`}
+        >
+          Setliste
+        </a>
+        <a
+          href="/api/auth/signout"
+          class="text-gray-400 hover:text-gray-300 transition-colors font-medium"
+        >
+          Abmelden
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        class="md:hidden text-gray-300 hover:text-white focus:outline-none"
+        aria-label="Menu öffnen"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden pb-4">
+      <div class="flex flex-col space-y-2">
+        <a
+          href="/dashboard"
+          class={`text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5 ${currentPage === 'dashboard' ? 'text-white bg-white/5' : ''}`}
+        >
+          Dashboard
+        </a>
+        <a
+          href="/suggest"
+          class={`text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5 ${currentPage === 'suggest' ? 'text-white bg-white/5' : ''}`}
+        >
+          Vorschlagen
+        </a>
+        <a
+          href="/vote"
+          class={`text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5 ${currentPage === 'vote' ? 'text-white bg-white/5' : ''}`}
+        >
+          Abstimmen
+        </a>
+        <a
+          href="/setlist"
+          class={`text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5 ${currentPage === 'setlist' ? 'text-white bg-white/5' : ''}`}
+        >
+          Setliste
+        </a>
+        <a
+          href="/api/auth/signout"
+          class="text-gray-400 hover:text-gray-300 transition-colors font-medium py-2 px-2 rounded hover:bg-white/5"
+        >
+          Abmelden
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>
