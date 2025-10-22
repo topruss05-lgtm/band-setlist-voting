@@ -20,11 +20,32 @@ if (accessToken && refreshToken) {
           <span class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-blue-400 bg-clip-text text-transparent">
             Blakerunners
           </span>
-          <div class="flex items-center space-x-4">
+
+          <!-- Desktop Navigation -->
+          <div class="hidden sm:flex items-center space-x-4">
             <a href="/signin" class="text-gray-300 hover:text-white transition-colors font-medium">
               Anmelden
             </a>
             <a href="/register" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-lg font-medium transition-all transform hover:scale-105">
+              Registrieren
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-button" class="sm:hidden text-gray-300 hover:text-white focus:outline-none" aria-label="Menu öffnen">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden sm:hidden pb-4">
+          <div class="flex flex-col space-y-2">
+            <a href="/signin" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
+              Anmelden
+            </a>
+            <a href="/register" class="text-gray-300 hover:text-white transition-colors font-medium py-2 px-2 rounded hover:bg-white/5">
               Registrieren
             </a>
           </div>
@@ -34,15 +55,15 @@ if (accessToken && refreshToken) {
 
     <!-- Hero Content -->
     <div class="flex-1 flex items-center">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-        <div class="text-center mb-16">
-          <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary-300 to-blue-400 bg-clip-text text-transparent">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 w-full">
+        <div class="text-center mb-12 sm:mb-16">
+          <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white via-primary-300 to-blue-400 bg-clip-text text-transparent">
             Setlist Voting
           </h1>
-          <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          <p class="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
             Stimme gemeinsam mit deinen Bandmitgliedern über die Songs ab, die in eure Setliste aufgenommen werden sollen
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center px-4">
             <a href="/register" class="bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700 px-8 py-4 rounded-xl font-semibold text-lg transition-all transform hover:scale-105 shadow-lg shadow-primary-500/50">
               Jetzt starten
             </a>
@@ -53,7 +74,7 @@ if (accessToken && refreshToken) {
         </div>
 
         <!-- Features Grid -->
-        <div class="grid md:grid-cols-3 gap-8 mt-20">
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-20">
           <!-- Feature 1 -->
           <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-primary-500/50 transition-all hover:transform hover:scale-105">
             <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-blue-500 rounded-xl flex items-center justify-center mb-6">
@@ -90,4 +111,16 @@ if (accessToken && refreshToken) {
       </div>
     </div>
   </div>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
 </Layout>
