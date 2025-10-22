@@ -85,18 +85,21 @@ function getYouTubeVideoId(url: string): string | null {
                   </div>
 
                   {videoId && (
-                    <div class="video-container mb-6 rounded-xl overflow-hidden bg-black">
+                    <div class="video-container mb-6 rounded-xl overflow-hidden bg-black" style="position: relative; padding-bottom: 56.25%; height: 0;">
                       <iframe
                         width="100%"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0`}
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&enablejsapi=1&origin=${Astro.url.origin}`}
                         title={song.title}
                         frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                         allowfullscreen
+                        playsinline
+                        webkitallowfullscreen
+                        mozallowfullscreen
                         loading="lazy"
-                        class="rounded-xl"
-                        style="border: 0;"
+                        class="rounded-xl video-iframe"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
                       ></iframe>
                     </div>
                   )}
@@ -138,6 +141,7 @@ function getYouTubeVideoId(url: string): string | null {
       padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
     .video-container iframe {
@@ -146,6 +150,30 @@ function getYouTubeVideoId(url: string): string | null {
       left: 0;
       width: 100%;
       height: 100%;
+    }
+
+    /* iOS-specific fixes for iframe videos */
+    .video-iframe {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* Ensure proper touch handling on iOS */
+    @supports (-webkit-touch-callout: none) {
+      .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .star:hover,
